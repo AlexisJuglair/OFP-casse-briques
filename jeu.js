@@ -18,7 +18,7 @@ class classJeu
         this.name        = 'jeu.arene';
 
         this.niveau      = 0;
-        this.vies        = 100;
+        this.vies        = 10;
 
         this.demoMode    = false;
         this.msg         = "";
