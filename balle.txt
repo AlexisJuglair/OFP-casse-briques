@@ -1,0 +1,63 @@
+            //COLLISION AVEC LES BRIQUES
+            jeu.arene.mur.briques.forEach(brique => 
+            {
+                let collision = false;
+                let points = new Array(8);
+               
+                points[0] = new classPoint(dx   , dy -7);
+                points[1] = new classPoint(dx +5, dy -5);
+                points[2] = new classPoint(dx +7, dy);
+                points[3] = new classPoint(dx +5, dy +5);
+                points[4] = new classPoint(dx   , dy +7);
+                points[5] = new classPoint(dx -5, dy +5);
+                points[6] = new classPoint(dx -7, dy);
+                points[7] = new classPoint(dx -5, dy -5);
+
+                for(let i = 0; i<8; i++)
+                {
+                    if ((points[i].x >= brique.x && points[i].x <= brique.x2) && (points[i].y >= brique.y && points[i].y <= brique.y2))
+                    {
+                        points[i].isIn = true;
+                        console.log("isIn = " + points[i].isIn);
+                        console.log(brique.x + "," + brique.y + "/" + brique.x2 + "," + brique.y2 + " : " + points[i].x + "," + points[i].y);
+                    }
+                }
+
+                //collision verticale
+                if((points[0].isIn && !points[4].isIn) ||
+                  (points[4].isIn && !points[0].isIn))
+                {
+                    this.ys = this.ys * -1;
+                    collision = true;
+                }
+
+                //collision horizontale
+                if((points[6].isIn && !points[2].isIn) || (points[2].isIn && !points[6].isIn))
+                {
+                    this.xs = this.xs * -1;
+                    collision = true;
+                }
+
+                //collision diagonale
+                if ((points[1].isIn && !points[5].isIn) || (points[7].isIn && !points[3].isIn) ||
+                    (points[7].isIn && !points[3].isIn) || (points[3].isIn && !points[7].isIn))
+                {
+                    this.xs = this.xs * -1;
+                    this.ys = this.ys * -1;
+                    collision = true;
+                }
+
+                if(collision == true)
+                {
+                    let el = document.getElementById("brique" + brique.id);
+                    if(el)
+                    {
+                        el.parentNode.removeChild(el);
+                    }
+                    brique.x = 0;
+                    brique.y = 0;
+                    brique.x2 = 0;
+                    brique.y2 = 0;
+                    console.log("supprimmer");
+                }
+            });
