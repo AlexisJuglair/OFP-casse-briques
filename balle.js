@@ -76,26 +76,6 @@ class balle
             
             //COLLISION BORDS HAUT ET BAS
             let dy = this.y + this.ys;
-            // if(dy < 7 || dy > 513)
-            // {
-            //     console.log("test " + dy);
-            //     this.ys = this.ys * -1;
-            //     this.y  = (dy < 7) ? 7 : 513;
-            // }
-            // else if (dy > 540)
-            // {
-            //     console.log("Game Over : " + dy);
-            //     this.stop();
-            //     this.moveTo((batte.x + (batte.w / 2)), (batte.y - 7));
-            //     this.setOnClickEvent();
-
-            //     this.ys = this.ys * -1;
-            // }
-            // else
-            // {
-            //     // console.log("test2 " + dy);
-            //     this.y = dy;
-            // }
 
             if(dy < 0)
             {
@@ -105,13 +85,11 @@ class balle
             else
             {
                 //GAME OVER
-                if(dy > 540)
+                if(dy > 520)
                 {
                     console.log('game over : '+dy);
 
                     this.stop();
-                    this.reset();
-                    this.go();
 
                     if (jeu.demoMode == false)
                     {         
@@ -128,6 +106,13 @@ class balle
                             setTimeout("jeu.msg.innerHTML = 'GAME OVER'", 2000);
                             btnStart.enable();
                         }
+                        this.reset();
+                        this.onClickAction();
+                    }
+                    else 
+                    {
+                        this.reset();
+                        this.go();
                     }
                     
                 }
@@ -147,16 +132,6 @@ class balle
                     }
                 }
             }
-
-            //COLLISION AVEC LA BATTE
-            // if (dy > 453 && (dx >= jeu.arene.batte.x1 && dx <= jeu.arene.batte.x2)) 
-            // {
-            //     this.ys = this.ys * -1;
-            // }
-            // else
-            // {
-            //     this.y = dy;
-            //}
 
             //COLLISION AVEC LES BRIQUES
             jeu.arene.mur.briques.forEach(brique => 
@@ -221,14 +196,20 @@ class balle
                             jeu.arene.mur.resetWall();
 
                             this.stop();
-                            this.reset();
-
+                            
                             jeu.niveau++;
                             jeu.arene.mur.loadLevel(jeu.niveau);
-
                             jeu.arene.mur.createWall();
 
-                            this.go();
+                            if(jeu.demoMode == true)
+                            {
+                                this.reset();
+                                this.go();
+                            }
+                            else 
+                            {
+                                jeu.arene.balles[0].onClickAction();
+                            }                    
                         }
                     }
                     brique.x = 0;
@@ -247,25 +228,32 @@ class balle
     {
         // console.log(this.name + "[" + this.id + "].moveTo();");
 
-        this.x = x;
-        this.y = y;
-
-        document.getElementById("balle"+this.id).style.left = (x - 7) + "px";
-        document.getElementById("balle"+this.id).style.top  = (y - 7) + "px";
+        if (jeu.catched == false)
+        {
+            this.x = x;
+            this.y = y;
+    
+            document.getElementById("balle"+this.id).style.left = (x - 7) + "px";
+            document.getElementById("balle"+this.id).style.top  = (y - 7) + "px";   
+        }
+        else
+        {
+            this.x = x+33;
+            this.y = y-7;
+            document.getElementById("balle"+this.id).style.left = (x + 33) + "px";
+            document.getElementById("balle"+this.id).style.top  = (y - 7) + "px"; 
+        }
+        
     }
 
-    setOnClickEvent() 
+    onClickAction() 
     {
-        console.log(this.name+".setOnClickEvent();)");
-
-        document.onclick = this.onClickAction(this.id);
-    }
-
-    onClickAction(id) {
-        console.log(this.name+".conClickAction();)");
-
-        jeu.arene.balles[id].go();
-        document.onclick = "";
+        console.log(this.name+".onClickAction();");
+        document.addEventListener("click", function()
+        {       
+            jeu.catched = false;
+            jeu.arene.balles[0].go(); 
+        });
     }
 
     reset() 
@@ -284,7 +272,7 @@ class balle
     
        if(this.run == null)
        {
-            this.run = setInterval("jeu.arene.balles[" + this.id +"].move()",5);   
+            this.run = setInterval("jeu.arene.balles[0].move()",5);   
        }
        else
        {   

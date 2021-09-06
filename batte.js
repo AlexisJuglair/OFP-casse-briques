@@ -46,6 +46,7 @@ class batte {
             let bcr = parseInt(jeu.arene.element.getBoundingClientRect().left);
             jeu.arene.batte.x1 = event.clientX - bcr - (jeu.arene.batte.w / 2);
             // jeu.arene.batte.move();
+            // jeu.catched = true;
             jeu.arene.batte.go();
         }
     }
@@ -53,21 +54,27 @@ class batte {
     move() 
     {
         //console.log(this.name+".move();");
-
-        if (jeu.demoMode) 
-        {
-            this.x1 = jeu.arene.balles[0].x - (this.w / 2);
-        }
         
-        
-        if (this.x1 < 0) 
+        if (jeu.catched == false)
         {
-            this.x1 = 0;
+            if (jeu.demoMode) 
+            {
+                this.x1 = jeu.arene.balles[0].x - (this.w / 2);
+            }
+            
+            if (this.x1 < 0) 
+            {
+                this.x1 = 0;
+            }
+    
+            if (this.x1 > (520 - this.w)) 
+            {
+                this.x1 = 520 - this.w;
+            }
         }
-
-        if (this.x1 > (520 - this.w)) 
+        else
         {
-            this.x1 = 520 - this.w;
+            jeu.arene.balles[0].moveTo(this.x1, this.y);
         }
 
         this.x2 = this.x1 + this.w;
