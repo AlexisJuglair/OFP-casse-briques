@@ -75,7 +75,8 @@ class classArene
         btnQuit.disable();
 
         this.batte.stop();
-        this.balles[0].stop();  
+
+        this.balles[0].stop();
 
         setTimeout("jeu.arene.element.style.height = 0", 1000);         
         setTimeout("document.getElementById('logo').style.top = 0", 3000);
@@ -86,8 +87,6 @@ class classArene
         setTimeout("btnStart.set('START', function() { jeu.start(); } )", 6000);
         setTimeout("btnQuit.set('QUIT', function() { jeu.quit(); } )", 6000);
         setTimeout("btnStart.enable()", 6500);
-        setTimeout("btnQuit.enable()", 6500);
-
-            
+        setTimeout("btnQuit.enable()", 6500);   
     }
 }

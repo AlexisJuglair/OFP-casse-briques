@@ -16,8 +16,6 @@ class batte {
         this.name = "batte";
 
         this.run = null;
-
-        // this.x = 0;
         
         this.w = 80;
         this.y = 460;
@@ -45,8 +43,6 @@ class batte {
         {
             let bcr = parseInt(jeu.arene.element.getBoundingClientRect().left);
             jeu.arene.batte.x1 = event.clientX - bcr - (jeu.arene.batte.w / 2);
-            // jeu.arene.batte.move();
-            // jeu.catched = true;
             jeu.arene.batte.go();
         }
     }

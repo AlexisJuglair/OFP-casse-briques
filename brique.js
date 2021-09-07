@@ -15,7 +15,6 @@ class Brique
     constructor(id,x1,y1,x2,y2,cb)
     {
         this.name = "brique";
-        // console.log(id + " : " + x + ", " + y);
         
         this.id = id;
         this.x = x1;

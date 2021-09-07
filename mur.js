@@ -42,17 +42,14 @@ class classMur
                 {
                     jeu.aBravo.play();
                     jeu.msg.style.top = "35%";
-                    jeu.msg.style.left = "25%";
-                    jeu.msg.innerHTML = "BRAVO !!!";
-                    setTimeout("jeu.msg.innerHTML = ''", 10000); 
-                    jeu.msgVies.innerHTML = this.vies;              
+                    jeu.msg.style.left = "7%";
+                    jeu.msgVies.innerHTML = "Vies : "+jeu.vies; 
+                    jeu.catched = true;  
+                    jeu.msg.innerHTML = "BRAVO";
+                    setTimeout("jeu.msg.innerHTML = ''", 10000);                                          
                 }
         } 
         this.fichier = xhr.responseText;
-        
-        console.log(this.fichier);
-        console.log(this.fichier.length);
-        console.log(this.total);
 
         for (let m = 0; m < this.fichier.length; m++) 
         {
@@ -66,10 +63,6 @@ class classMur
                 }
             }
         }
-
-        console.log(this.total);
-        console.log(this.level);
-        console.log(this.level.length);
     }
 
     createWall()

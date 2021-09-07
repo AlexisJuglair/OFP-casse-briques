@@ -29,6 +29,7 @@ class classJeu
 
         this.aGameOver = new Audio('sounds/game-over.mp3');
         this.aBravo = new Audio('sounds/bravo.mp3');
+        //this.aBrique = new Audio('sounds/brique.mp3');
     }
 
     start() 
@@ -135,9 +136,6 @@ class classJeu
         this.msg.style.left = "15%";
         this.msg.innerHTML = "DEMO";
         this.msgVies.innerHTML = "Vies : -";
-
-        // btnStart.enable();
-        // btnQuit.enable();
 
         this.demoMode = true;
          

@@ -87,8 +87,6 @@ class balle
                 //GAME OVER
                 if(dy > 520)
                 {
-                    console.log('game over : '+dy);
-
                     this.stop();
 
                     if (jeu.demoMode == false)
@@ -97,17 +95,16 @@ class balle
                         jeu.msgVies.innerHTML = "Vies : "+jeu.viesDecrem;
                         if (jeu.viesDecrem == 0)
                         {
-                            console.log("GAME OVER : "+jeu.viesDecrem);
                             this.stop();
                             jeu.aGameOver.play();
                             jeu.msg.style.top = "25%";
                             jeu.msg.style.left = "15%";
                             setTimeout("jeu.msg.innerHTML = 'GAME'", 1000);
                             setTimeout("jeu.msg.innerHTML = 'GAME OVER'", 2000);
-                            btnStart.enable();
+                            setTimeout("jeu.start();", 2500);
                         }
                         this.reset();
-                        this.onClickAction();
+                        jeu.catched = true;
                     }
                     else 
                     {
@@ -153,8 +150,6 @@ class balle
                     if ((points[i].x >= brique.x && points[i].x <= brique.x2) && (points[i].y >= brique.y && points[i].y <= brique.y2))
                     {
                         points[i].isIn = true;
-                        // console.log("isIn = " + points[i].isIn);
-                        // console.log(brique.x + "," + brique.y + "/" + brique.x2 + "," + brique.y2 + " : " + points[i].x + "," + points[i].y);
                     }
                 }
 
@@ -187,12 +182,12 @@ class balle
                     let el = document.getElementById("brique" + brique.id);
                     if(el)
                     {
+                        //jeu.aBrique.play();
                         el.parentNode.removeChild(el);
 
                         jeu.arene.mur.total--;
                         if (jeu.arene.mur.total == 0)
                         {
-                            console.log("TERMINER");
                             jeu.arene.mur.resetWall();
 
                             this.stop();
@@ -201,14 +196,14 @@ class balle
                             jeu.arene.mur.loadLevel(jeu.niveau);
                             jeu.arene.mur.createWall();
 
+                            this.reset();
                             if(jeu.demoMode == true)
-                            {
-                                this.reset();
+                            {                  
                                 this.go();
                             }
                             else 
                             {
-                                jeu.arene.balles[0].onClickAction();
+                                jeu.catched = true;
                             }                    
                         }
                     }
@@ -249,10 +244,10 @@ class balle
     onClickAction() 
     {
         console.log(this.name+".onClickAction();");
-        document.addEventListener("click", function()
+        document.addEventListener("click", function mouseClick()
         {       
             jeu.catched = false;
-            jeu.arene.balles[0].go(); 
+            jeu.arene.balles[0].go();       
         });
     }
 
